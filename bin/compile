@@ -85,11 +85,11 @@ BUNDLE_DEST=`mktemp -d "$BUILDPACK_DIR/build-XXXX"`
 # of glibc (contained in cedar-14)
 if [ -n "${BUILDPACK_PRELAUNCH_METEOR+1}" ]; then 
 echo "-----> Pre-launching Meteor to create packages assets and prevent bundling from failing"
-    HOME=$METEOR_DIR timeout -s9 60 $METEOR --settings settings.json || true
+    HOME=$METEOR_DIR timeout -s9 60 $METEOR --settings settings.json --server $ROOT_URL || true
 fi
 # </hack>
 
-HOME=$METEOR_DIR $METEOR build --directory $BUNDLE_DEST
+HOME=$METEOR_DIR $METEOR build --server $ROOT_URL --directory $BUNDLE_DEST
 mv $BUNDLE_DEST/bundle "$COMPILE_DIR/app"
 rmdir $BUNDLE_DEST
 
